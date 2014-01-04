@@ -70,3 +70,41 @@ Creates a new Thread instance based on the function passed in:
 ### thread.kill()
 
 Kills the thread.
+
+## Using with browserify
+
+To use this in the browser, use the
+[browserify](https://github.com/substack/node-browserify) command.
+
+For example, for the following files:
+
+``` html
+<!DOCTYPE html>
+<!-- app.html -->
+<script src="bundle.js"></script>
+```
+
+``` js
+// app.js
+var Thread = require('threadless');
+var thread = new Thread(function (n, cb) {
+  // CPU intensive operation that would block the event loop
+  function fibo(n) {
+    return n > 1 ? fibo(n - 1) + fibo(n - 2) : 1;
+  }
+
+  cb(null, fibo(n));
+});
+thread.run(30, function (err, result) {
+  if (err) throw err;
+  console.log('the result is ' + result);
+});
+```
+
+Run the browserify command:
+
+``` bash
+$ browserify app.js > bundle.js
+```
+
+Then open up `app.html` in your browser.
