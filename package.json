@@ -1,6 +1,6 @@
 {
   "name": "threadless",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Threading for nodejs and the browser built on web workers",
   "main": "index.js",
   "scripts": {
